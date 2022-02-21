@@ -5,7 +5,6 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 dayjs.extend(localizedFormat);
 
 const log = pino({
-    // prettyPrint: true,
     base: {
         pid: false, // remove pid from logger
     },
