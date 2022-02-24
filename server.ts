@@ -1,6 +1,7 @@
 import http from 'http';
 import app from './app';
 import log from './api/logger/logger';
+import 'dotenv/config';
 
 const port = process.env.PORT || 3000;
 
