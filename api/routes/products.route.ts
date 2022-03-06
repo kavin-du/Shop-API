@@ -44,8 +44,9 @@ not json Data, so form body will not yet parsed and we cant access req.body.toke
 body parser only parses json like data, upload() uses multer, check function
 */
 // this does not matter, simply put token in the header, so we dont need to parse the body each time authorize
-router.post('/', checkAuth, upload.single('productImage'), productsController.products_create_product);
-
+router.post('/', upload.single('productImage'), productsController.products_create_product);
+// router.post('/', checkAuth, upload.single('productImage'), productsController.products_create_product);
+ 
 router.get('/:productId', productsController.products_get_product);
 
 router.patch('/:productId', checkAuth, productsController.products_patch_product);

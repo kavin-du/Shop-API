@@ -3,15 +3,16 @@ import express, {
   Request,
   Response,
   NextFunction,
-  request,
 } from "express";
+
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import log from "./api/logger/logger";
 
+import log from "./api/logger/logger";
 import authRoutes from "./api/routes/auth.route";
 import productRoutes from "./api/routes/products.route";
+import orderRoutes from "./api/routes/order.route";
 
 const app: Express = express();
 
@@ -24,9 +25,12 @@ mongoose.connect("mongodb://user:userpw@localhost:27017/my-db").then(
   }
 );
 
-app.use(morgan("dev"));
+// logging dev info
+app.use(morgan("dev")); 
 
-// bodyparser here
+// '/uploads' otherwise images available in localhost:3000/image-name
+// static method make folders publicly available, otherwise need to implement another route to view images
+app.use('/uploads', express.static('uploads'))
 app.use(bodyParser.urlencoded({ extended: false })); // only simple bodies, not extended ones
 app.use(bodyParser.json());
 
@@ -48,6 +52,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // general routes
 app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
+app.use("/orders", orderRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const error: Error = new Error("Not found");
